@@ -2,6 +2,11 @@ import React, { Component } from "react";
 
 class SearchBar extends Component {
   render() {
+    const { onSearch } = this.props;
+    let {search} = this.props;
+    const updateSearch = e => {
+      search= e.target.value;
+    }
     return (
       <div className="search-bar">
         <div className="row">
@@ -16,14 +21,15 @@ class SearchBar extends Component {
               aria-label="Search by name!!"
               aria-describedby="button-addon2"
               id="countryNameInput"
+              onChange={updateSearch}
             />
-            <button className="btn btn-secondary" type="button" id="button-addon2">
+            <button className="btn btn-secondary" type="button" id="button-addon2" onClick={e => onSearch(e, search)}>
               <i className="fa fa-search" aria-hidden="true" />
             </button>
           </div>
         </div>
         <div id="countryHelp" className="form-text fw-light fs-6">
-          You can also try searching with name, symbol, currency.....
+          You can also try searching with symbol, currency.....
         </div>
       </div>
     );

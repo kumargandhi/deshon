@@ -1,48 +1,46 @@
-import React, { Component } from "react";
-import SearchBar from "./components/searchBar";
+import { useState, useEffect } from "react";
+import SearchBar from "./components/SearchBar";
+import CountriesContainer from "./components/CountriesContainer";
 import "./App.css";
 import axios from "axios";
 
-class App extends Component {
+function App() {
+  const [search, setSearch] = useState("");
+  const [results, setResults] = useState([]);
 
-  results = [
-    {
-      name: 'test'
-    }
-  ];
+  useEffect(() => {
+    // Using the effects
+  }, []);
 
-  handleSearch = (e, search) => {
+  const handleSearch = (e, search) => {
     e.preventDefault();
-    console.log('search clicked' + search);
+    console.log("search clicked" + search);
     axios
-      .get(
-        'https://restcountries.com/v3.1/name/' + search
-      )
-      .then(response => {
-        this.results = response.data;
+      .get("https://restcountries.com/v3.1/name/" + search)
+      .then((response) => {
+        setResults(response.data);
+        console.log('' + results);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(
           "Encountered an error with fetching and parsing data",
           error
         );
       });
-  }
+  };
 
-  render() {
-    return (
-      <div className="App">
-        <div className="App-main">
-          <SearchBar onSearch={this.handleSearch}></SearchBar>
-          <div>
-          {
-            this.results.map((item) => (<div>{item.name}</div>))
-          }
-        </div>
-        </div>
+  return (
+    <div className="App">
+      <div className="App-main">
+        <SearchBar
+          search={search}
+          setSearch={setSearch}
+          onSearch={handleSearch}
+        ></SearchBar>
+        <CountriesContainer countries={results}></CountriesContainer>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;

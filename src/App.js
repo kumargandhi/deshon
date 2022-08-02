@@ -7,6 +7,7 @@ import axios from "axios";
 function App() {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Using the effects
@@ -15,13 +16,15 @@ function App() {
   const handleSearch = (e, search) => {
     e.preventDefault();
     console.log("search clicked" + search);
+    setLoading(true);
     axios
       .get("https://restcountries.com/v3.1/name/" + search)
       .then((response) => {
         setResults(response.data);
-        console.log('' + results);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(
           "Encountered an error with fetching and parsing data",
           error
@@ -37,7 +40,7 @@ function App() {
           setSearch={setSearch}
           onSearch={handleSearch}
         ></SearchBar>
-        <CountriesContainer countries={results}></CountriesContainer>
+        <CountriesContainer countries={results} loading={loading}></CountriesContainer>
       </div>
     </div>
   );

@@ -47,7 +47,7 @@ const CountryCard = ({ country }) => {
         </ul>
       </div>
       <div className="card-footer">
-        <a href="#" class="card-link">
+        <a href="/#" class="card-link">
           More
         </a>
       </div>

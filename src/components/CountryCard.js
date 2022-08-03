@@ -1,4 +1,9 @@
+import { useState } from "react";
+import CountryDialog from "./CountryDialog";
+
 const CountryCard = ({ country }) => {
+  const [showMore, setShowMore] = useState(false);
+
   const getObjKeys = (d) => {
     return Object.keys(d).join(", ");
   };
@@ -47,9 +52,14 @@ const CountryCard = ({ country }) => {
         </ul>
       </div>
       <div className="card-footer">
-        <a href="/#" class="card-link">
+        <button
+          type="button"
+          class="btn btn-link btn-sm"
+          onClick={() => setShowMore(true)}
+        >
           More
-        </a>
+        </button>
+        <CountryDialog show={showMore} onHide={() => setShowMore(false)} country={country}/>
       </div>
     </div>
   );
